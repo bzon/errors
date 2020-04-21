@@ -4,13 +4,14 @@
 
 A drop-in replacement for creating errors with OpenCensus instrumentation (OpenTelemetry soon).
 
-This package also supports the Go 1.13 `errors.As` and `errors.Is` methods. Check the examples in Go doc.
-
-I created this package to help me link the details of my Stackdriver traces with Stackdriver logs.
+Initially, I created this package to help me link the details of my Stackdriver traces with Stackdriver logs.
 
 * https://cloud.google.com/trace/docs/viewing-details
 * https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry
 * https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation
+
+This package also supports the Go 1.13 `errors.As` and `errors.Is` methods. Please check the examples in Go doc.
+
 
 ## Getting Started
 
@@ -50,7 +51,7 @@ d2d2b126d0474947821106525e32b6e0
 1644b4b9be26c929
 ```
 
-## How I Use it
+## Production Usage
 
 See the source code of the example server in [examples](./examples) folder.
 
@@ -73,7 +74,7 @@ $ go run main.go | jq '.'
 }
 ```
 
-Automatic annotations in supported tracing platform for OpenCensus.
+The annotations are automatically exported to any OpenCensus supported tracing platform. E.g. Jaeger.
 
 ![img](./jaeger-error-trace.png)
 
