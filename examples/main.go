@@ -34,7 +34,7 @@ func main() {
 
 	for {
 		workerr := work(context.Background(), logger)
-		if ec, ok := workerr.(errors.Error); ok {
+		if ec, ok := workerr.(errors.ErrorTracer); ok {
 			logger.Log(
 				"message", ec.Error(),
 				"logging.googleapis.com/spanId", ec.TraceContext().SpanID,
