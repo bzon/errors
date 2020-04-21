@@ -2,7 +2,9 @@
 
 # errors
 
-My drop-in replacement for `github.com/pkg/errors`. 
+A drop-in replacement for creating errors with OpenCensus instrumentation (OpenTelemetry soon).
+
+This package also supports the Go 1.13 `errors.As` and `errors.Is` methods. Check the examples in Go doc.
 
 I created this package to help me link the details of my Stackdriver traces with Stackdriver logs.
 
@@ -10,29 +12,25 @@ I created this package to help me link the details of my Stackdriver traces with
 * https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry
 * https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation
 
-## Goals
-
-Add OpenCensus trace attributes when creating a new error.
-
-## Basic Usage
+## Getting Started
 
 Drop-in replacement. Creating an error.
 
 ```golang
-err := errors.New("msg") // Wrap .. Wrapf .. Errof ..
+err := errors.New("msg") // Wrap .. Wrapf .. Errorf ..
 ```
 
 Creating an error with context useful for monitoring.
 
 ```golang
 func main() {
-	_, span := trace.StartSpan(context.Background(), "ExampleNewT")
+	_, span := trace.StartSpan(context.Background(), "main")
 	defer span.End()
 
 	err := errors.NewT(span, "error")
 	fmt.Println(err)
 
-	if erctx, ok := err.(errors.Error); ok {
+	if erctx, ok := err.(errors.ErrorTracer); ok {
 		fmt.Println(erctx.SourceLocation().Function)
 		fmt.Println(erctx.SourceLocation().File)
 		fmt.Println(erctx.SourceLocation().Line)
